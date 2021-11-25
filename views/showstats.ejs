@@ -2,16 +2,16 @@
 <%include partials/sidebar %>
     <div class="twelve wide column" style="margin-top:30px">
           <h2 class="ui header">
-                <img  src="<%= team.image %>" height="200px" width="200px">
+                <img  src="<%= match.image %>" height="200px" width="200px">
                 <div class="content">
-                <%= team.name %>
+                <%= match.name %>
                 </div>
             </h2>
             <hr>
             <h2>Player Details:-</h2>
-            <a href="/dashboard/mymatches/<%=team._id%>/<%= player._id %>/edit"><div class="ui button">Edit Details</div></a>
+            <a href="/dashboard/mymatches/<%=match._id%>/<%= player._id %>/edit"><div class="ui button">Edit Details</div></a>
             <div class="right floated content" style="float:left">
-                <form method="POST" action="/dashboard/mymatches/<%= team._id%>/<%= player._id %>?_method=DELETE">
+                <form method="POST" action="/dashboard/mymatches/<%= match._id%>/<%= player._id %>?_method=DELETE">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="submit" class="ui button" value="delete">
             </form>

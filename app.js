@@ -466,18 +466,18 @@ app.post("/dashboard/mymatches/:id", isLoggedIn, function (req, res) {
 
 app.get("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
     var _id = req.params.id;
-    Match.findById({ user: req.user.id, _id }, function (err, team) {
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
         if (err) {
             console.log(err);
         }
         else {
             var _id = req.params.playerid;
-            PlayerStats.findById({ _id, team: req.params.id }, function (err, player) {
+            PlayerStats.findById({ _id, match: req.params.id }, function (err, player) {
                 if (err) {
                     console.log(err);
                 }
                 else {
-                    res.render("showstats", { player: player, team: team });
+                    res.render("showstats", { player: player, match: match });
                 }
             });
         }
@@ -504,6 +504,7 @@ app.get("/dashboard/mymatches/:id/:playerid/edit", isLoggedIn, function (req, re
                     }
                     else {
                         res.render("editstats", { player: updatePlayer, match: match });
+                        
                     }
 
                 }
@@ -515,12 +516,13 @@ app.get("/dashboard/mymatches/:id/:playerid/edit", isLoggedIn, function (req, re
 
 app.put("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
     var _id = req.params.playerid;
-    PlayerStats.findByIdAndUpdate({ _id, team: req.params.id }, req.body.player, function (err, updatedplayer) {
+    PlayerStats.findByIdAndUpdate({ _id, match: req.params.id }, req.body.player, function (err, updatedplayer) {
         if (err) {
             console.log(err);
         }
         else {
             req.flash("success", "Successfully edited details");
+            // console.log(updatedplayer);
             res.redirect("/dashboard/mymatches/" + req.params.id);
         }
     });
@@ -530,13 +532,13 @@ app.put("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
 
 app.delete("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
     var _id = req.params.playerid;
-    Player.findByIdAndRemove({ _id, team: req.params.id }, function (err) {
+    PlayerStats.findByIdAndRemove({ _id, match: req.params.id }, function (err) {
         if (err) {
-            res.redirect("/dashboard/myteams");
+            res.redirect("/dashboard/mymatches");
         }
         else {
             req.flash("success", "Successfully deleted player");
-            res.redirect("/dashboard/myteams/" + req.params.id);
+            res.redirect("/dashboard/mymatches/" + req.params.id);
         }
     });
 });
