@@ -375,7 +375,7 @@ app.get("/dashboardsc/myteams", isLoggedIn, function (req, res) {
  
 
 app.get("/dashboardsc/newteam", function (req, res) {
-    res.render("newteam");
+    res.render("newteamsc");
 });
 
 
@@ -412,11 +412,11 @@ app.get("/dashboardsc/myteams/:id", function (req, res) {
                     console.log(err);
                 }
                 else {
-                    res.render("players", { player: player, team: team });
+                    res.render("playerssc", { player: player, team: team });
                 }
             });
         }
-    });
+    });   
 });
 
 
@@ -431,7 +431,7 @@ app.get("/dashboardsc/myteams/:id/newplayer", isLoggedIn, function (req, res) {
             console.log(err);
         }
         else {
-            res.render("newplayer", { team: team });
+            res.render("newplayersc", { team: team });
         }
     });
 });
@@ -475,12 +475,12 @@ app.get("/dashboardsc/myteams/:id/:playerid", isLoggedIn, function (req, res) {
                     console.log(err);
                 }
                 else {
-                    res.render("show", { player: player, team: team });
+                    res.render("showsc", { player: player, team: team });
                 }
             });
         }
-    });
-});
+    });   
+});  
 
 //---------------- Edit Player ---------------//
 
@@ -551,9 +551,9 @@ app.get("/dashboardsc/schedule",isLoggedIn, function (req, res) {
 });
 
 app.get("/dashboardsc/schedule/newschedule", isLoggedIn, function (req, res) {
-    res.render("newSchedule");
+    res.render("newSchedulesc");
 });
-
+  
 app.post("/dashboardsc/schedule", isLoggedIn, function (req, res) {
     var scheduleDetails = {
         Teamname: req.body.teamname,
@@ -583,7 +583,7 @@ app.delete("/dashboardsc/schedule/:id", isLoggedIn, function (req, res) {
             res.redirect("/dashboardsc/schedule");
         }
     });
-});
+}); 
 
 
 // ----------- end of dashboard sc teams -------------------------//
