@@ -403,15 +403,15 @@ app.get("/dashboard/mymatches/:id", function (req, res) {
             console.log(err);
         }
         else {
-            console.log("test");
+            // console.log("test");
             PlayerStats.find({ user: req.user.id, match: req.params.id }, function (err, player) {
                 if (err) {
                     console.log(err);  
                 }
                 else {  
-                    console.log("inside playerstats");
-                    console.log(player);
-                    console.log(match); 
+                    // console.log("inside playerstats");
+                    // console.log(player);
+                    // console.log(match); 
                     res.render("playerstats", { player: player, match: match });
                 }
             });
@@ -486,24 +486,24 @@ app.get("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
 
 //---------------- Edit Player ---------------//
 
-app.get("/dashboard/myteams/:id/:playerid/edit", isLoggedIn, function (req, res) {
+app.get("/dashboard/mymatches/:id/:playerid/edit", isLoggedIn, function (req, res) {
     var _id = req.params.id;
-    Team.findById({ user: req.user.id, _id }, function (err, team) {
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
         if (err) {
             console.log(err);
         }
         else {
             var _id = req.params.playerid;
-            Player.findById({ _id, team: req.params.id }, function (err, updatePlayer) {
+            PlayerStats.findById({ _id, match: req.params.id }, function (err, updatePlayer) {
                 if (err) {
                     console.log(err);
                 }
                 else {
                     if (updatePlayer.user != req.user.id) {
-                        res.redirect("/dashboard/myteams");
+                        res.redirect("/dashboard/mymatches");
                     }
                     else {
-                        res.render("edit", { player: updatePlayer, team: team });
+                        res.render("editstats", { player: updatePlayer, match: match });
                     }
 
                 }
@@ -513,22 +513,22 @@ app.get("/dashboard/myteams/:id/:playerid/edit", isLoggedIn, function (req, res)
 });
 
 
-app.put("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
+app.put("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
     var _id = req.params.playerid;
-    Player.findByIdAndUpdate({ _id, team: req.params.id }, req.body.player, function (err, updatedplayer) {
+    PlayerStats.findByIdAndUpdate({ _id, team: req.params.id }, req.body.player, function (err, updatedplayer) {
         if (err) {
             console.log(err);
         }
         else {
             req.flash("success", "Successfully edited details");
-            res.redirect("/dashboard/myteams/" + req.params.id);
+            res.redirect("/dashboard/mymatches/" + req.params.id);
         }
     });
 });
 
 //--------------- Delete Route-----------//
 
-app.delete("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
+app.delete("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
     var _id = req.params.playerid;
     Player.findByIdAndRemove({ _id, team: req.params.id }, function (err) {
         if (err) {
