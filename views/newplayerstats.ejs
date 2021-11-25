@@ -1,0 +1,56 @@
+<% include partials/header %>
+<%include partials/sidebar %>
+    <div class="twelve wide column" style="margin-top:30px">
+          <h2 class="ui header">
+                <img  src="<%= team.image %>" height="200px" width="200px">
+                <div class="content">
+                <%= team.name %>
+                </div>
+            </h2>  
+            <h3>Add Player Details:- </h3>
+            <form action="/dashboard/mymatches/<%= team._id%>" method="POST" class="ui form" style="margin-right:30px">
+                <h4 class="ui dividing header">Personal Information</h4>
+                <div class="field">
+                    <label>Name:</label>
+                    <input type="text" placeholder="name" name="name" required >   
+                </div>
+                <div class="field">
+                    <label>nomatch:</label>
+                    <input type="text" placeholder="Number of matches played up until now" name="nomatch" required >    
+                </div>
+                <div class="field">
+                    <label>runs</label>
+                    <input type="text" placeholder="Runs" name="runs" required>
+                </div>
+                <div class="field">
+                    <label>BF</label>
+                    <input type="text" placeholder="Balls Faced" name="BF" required >    
+                </div>
+                
+                <div class="field">
+                    <label>Hundreds</label>
+                    <input type = "text" placeholder = "Hundreds" name="hundreds" required >
+                </div>
+                <div class="field">
+                    <label>Fiftys</label>
+                    <input type = "text" placeholder = "Fiftys" name="fiftys" required >
+                </div>
+                <div class="field">
+                    <label>Fours</label>
+                    <input type = "text" placeholder = "Fours" name="fours" required >
+                </div>
+                <div class="field">
+                    <label>Sixs</label>
+                    <input type = "text" placeholder = "Sixs" name="sixs" required >
+                </div>
+                <div class="field">
+                    <label>Team</label>
+                    <input type = "text" placeholder = "Team" name="team" required >
+                </div>
+                
+                
+                <div class="field">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+<% include partials/footer %>

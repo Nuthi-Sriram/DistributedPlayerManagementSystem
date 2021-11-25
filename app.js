@@ -10,6 +10,8 @@ var User = require("./models/user");
 var Player = require("./models/player");
 var Memory = require("./models/memory");
 var Team = require("./models/team");
+var Match=require("./models/match");
+var PlayerStats=require("./models/playermatchstats");
 var Schedule = require("./models/schedule");
 
 mongoose.connect("mongodb+srv://sriram:sriram@cluster0.zbiur.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
@@ -352,6 +354,196 @@ app.delete("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
         }
     });
 });
+
+
+//--------------------------Match Routes ------------------//
+
+app.get("/dashboard/mymatches", isLoggedIn, function (req, res) {
+    Match.find({ user: req.user.id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("match", { team: team });
+        }
+    })
+});
+
+
+app.get("/dashboard/newmatch", function (req, res) {
+    res.render("newmatch");
+});
+
+
+app.post("/dashboard/newmatch", function (req, res) {
+    var newMatch = {
+        image: req.body.logo,
+        name: req.body.team,
+        user: req.user.id
+    };
+    Match.create(newMatch, function (err, newMatch) {
+        if (err) {
+            console.log(err);
+            res.redirect("/dashboard/newmatch");
+        }
+        else {
+            req.flash("success", "Successfully added a new team");
+            res.redirect("/dashboard/mymatches");
+        }
+    });
+});
+
+
+//------------------ Player route---------------//
+
+app.get("/dashboard/mymatches/:id", function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("test");
+            PlayerStats.find({ user: req.user.id, match: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);  
+                }
+                else {  
+                    console.log("inside playerstats");
+                    console.log(player);
+                    console.log(match); 
+                    res.render("playerstats", { player: player, match: match });
+                }
+            });
+        } 
+    });
+});
+
+
+
+
+// ------------------New Player------------//
+
+app.get("/dashboard/mymatches/:id/newplayer", isLoggedIn, function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ _id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("newplayerstats", { team: team });
+        }
+    });
+});
+
+app.post("/dashboard/mymatches/:id", isLoggedIn, function (req, res) {
+    var newPlayer = {
+        name: req.body.name,
+        nomatch: req.body.nomatch,
+        runs: req.body.runs,
+        BF: req.body.BF,
+        hundreds: req.body.hundreds,
+        fiftys: req.body.fiftys,
+        fours: req.body.fours,
+        sixs: req.body.sixs,
+        team: req.body.team,
+        match: req.params.id,
+        user: req.user.id
+    };
+    PlayerStats.create(newPlayer, function (err, newPlayer) {
+        if (err) {
+            console.log(err);
+            res.redirect("/dashboard/mymatches/:id/newplayer");
+        }
+        else {
+            req.flash("success", "Successfully added a new player");
+            res.redirect("/dashboard/mymatches/" + req.params.id);
+        }
+    });
+});
+
+// -----------------Show Route-------------//
+
+app.get("/dashboard/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            var _id = req.params.playerid;
+            PlayerStats.findById({ _id, team: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.render("showstats", { player: player, team: team });
+                }
+            });
+        }
+    });
+});
+
+//---------------- Edit Player ---------------//
+
+app.get("/dashboard/myteams/:id/:playerid/edit", isLoggedIn, function (req, res) {
+    var _id = req.params.id;
+    Team.findById({ user: req.user.id, _id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            var _id = req.params.playerid;
+            Player.findById({ _id, team: req.params.id }, function (err, updatePlayer) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    if (updatePlayer.user != req.user.id) {
+                        res.redirect("/dashboard/myteams");
+                    }
+                    else {
+                        res.render("edit", { player: updatePlayer, team: team });
+                    }
+
+                }
+            });
+        }
+    });
+});
+
+
+app.put("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
+    var _id = req.params.playerid;
+    Player.findByIdAndUpdate({ _id, team: req.params.id }, req.body.player, function (err, updatedplayer) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            req.flash("success", "Successfully edited details");
+            res.redirect("/dashboard/myteams/" + req.params.id);
+        }
+    });
+});
+
+//--------------- Delete Route-----------//
+
+app.delete("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
+    var _id = req.params.playerid;
+    Player.findByIdAndRemove({ _id, team: req.params.id }, function (err) {
+        if (err) {
+            res.redirect("/dashboard/myteams");
+        }
+        else {
+            req.flash("success", "Successfully deleted player");
+            res.redirect("/dashboard/myteams/" + req.params.id);
+        }
+    });
+});
+
+
+
+//---------------------------end of match routes--------------//
 
 // --------------------Schedule Routes---------------//
 
