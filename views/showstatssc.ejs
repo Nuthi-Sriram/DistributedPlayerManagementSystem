@@ -1,0 +1,107 @@
+<% include partials/headersc %>
+<%include partials/sidebarsc %>
+    <div class="twelve wide column" style="margin-top:30px">
+          <h2 class="ui header">
+                <img  src="<%= match.image %>" height="200px" width="200px">
+                <div class="content">
+                <%= match.name %>
+                </div>
+            </h2>
+            <hr>
+            <h2>Player Details:-</h2>
+            <!-- <a href="/dashboard/mymatches/<%=match._id%>/<%= player._id %>/edit"><div class="ui button">Edit Details</div></a> -->
+            <div class="right floated content" style="float:left">
+                <form method="POST" action="/dashboard/mymatches/<%= match._id%>/<%= player._id %>?_method=DELETE">
+                <input type="hidden" name="_method" value="DELETE">
+                <!-- <input type="submit" class="ui button" value="delete"> -->
+            </form>
+            </div>    
+            <h3 class="ui dividing header" style="line-height:2">All Time Statistics</h3>
+            <div class="ui grid">
+                <div class="row">
+                    <div class="four wide column">
+                        <h4>Name:</h4>
+                    </div>
+                    <div class="four wide column">
+                        <h4> <%= player.name%></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column">
+                        <h4>No Of Matches: </h4>
+                    </div>
+                    <div class="four wide column">
+                        <h4> <%= player.nomatch%></h4>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="four wide column">
+                        <h4>No of Balls Faced: </h4>
+                    </div>
+                    <div class="four wide column">
+                        <h4> <%= player.BF %></h4>
+                    </div>
+                </div>
+            </div>
+                <h3 class="ui dividing header"  style="line-height:2">Match Specific:- </h3>
+                <div class="ui grid">
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Runs: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4><%= player.runs %></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Hundreds: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4> <%= player.hundreds %></h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Fiftys: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4> <%= player.fiftys %></h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Fours: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4> <%= player.fours %></h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Sixes: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4> <%= player.sixs %></h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="four wide column">
+                            <h4>Team: </h4>
+                        </div>
+                        <div class="four wide column">
+                            <h4> <%= player.team %></h4>
+                        </div>
+                    </div>
+
+                    
+                    
+                </div>
+             </div>
+        </div>
+<% include partials/footer %>

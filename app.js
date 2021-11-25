@@ -355,6 +355,69 @@ app.delete("/dashboard/myteams/:id/:playerid", isLoggedIn, function (req, res) {
     });
 });
 
+//----------------selection committee match routes---------------//
+app.get("/dashboardsc/mymatches", isLoggedIn, function (req, res) {
+    Match.find({ user: req.user.id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("matchsc", { team: team });
+        }
+    })
+});
+
+//------------------ Player route---------------//
+
+app.get("/dashboardsc/mymatches/:id", function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            // console.log("test");
+            PlayerStats.find({ user: req.user.id, match: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);  
+                }
+                else {  
+                    // console.log("inside playerstats");
+                    // console.log(player);
+                    // console.log(match); 
+                    res.render("playerstatssc", { player: player, match: match });
+                }
+            });
+        } 
+    });
+});
+
+
+// -----------------Show Route-------------//
+
+app.get("/dashboardsc/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            var _id = req.params.playerid;
+            PlayerStats.findById({ _id, match: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.render("showstatssc", { player: player, match: match });
+                }
+            });
+        }
+    });
+});
+
+
+
+//----------------end of selection committee match routes---------------//
 
 //--------------------------Match Routes ------------------//
 
