@@ -2,7 +2,7 @@
 <%include partials/sidebarsc %>
     <div class="twelve wide column">
         <h2 style="margin-top:40px;color:#490707"><i class="calendar check icon" style="color:#ac1010"></i>Schedule:-</h2>
-        <a href="/dashboardsc/schedule/newschedule"><button class="ui red basic button" style="margin-right:20px">New Schedule</button></a>
+        <!-- <a href="/dashboardsc/schedule/newschedule"><button class="ui red basic button" style="margin-right:20px">New Schedule</button></a> -->
         <hr style="margin-right:400px;margin-top:30px">
         <% schedule.forEach(function(schedule){ %>
             <div class="ui raised segment"style="margin-right:400px;margin-top:30px">
@@ -14,7 +14,7 @@
                     <div class="right floated content">
                         <form action="/dashboardsc/schedule/<%= schedule._id %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
-                        <input type="submit" class="ui inverted primary button" value="delete">
+                        <!-- <input type="submit" class="ui inverted primary button" value="delete"> -->
                         </form>
                     </div>
                     <div class="content">
