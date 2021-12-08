@@ -1,0 +1,57 @@
+<% include partials/header %>
+<%include partials/sidebar %>
+    <div class="twelve wide column" style="margin-top:30px">
+        <h2 class="ui header">
+                <img  src="<%= match.image %>" height="200px" width="200px">
+                <div class="content">
+                <%= match.name %>
+                </div>
+            </h2>
+            <h3>Edit Player Details:- </h3>
+            <form action="/dashboard/mymatches/<%=match._id%>/<%= player._id %>?_method=PUT" method="POST" class="ui form" style="margin-right:30px">
+                <h4 class="ui dividing header">Personal Information</h4>
+                <div class="field">
+                    <label>Name:</label>
+                    <input type="text" placeholder="name" name="player[name]" required value="<%= player.name%>">   
+                </div>
+                <div class="field">
+                    <label>nomatch:</label>
+                    <input type="text" placeholder="Number of matches played up until now" name="player[nomatch]" required value="<%= player.nomatch%>">    
+                </div>
+                <div class="field">
+                    <label>runs</label>
+                    <input type="text" placeholder="Runs" name="player[runs]" required value="<%= player.runs%>">
+                </div>
+                <div class="field">
+                    <label>BF</label>
+                    <input type="text" placeholder="Balls Faced" name="player[BF]" required value="<%= player.BF%>">    
+                </div>
+                
+                <div class="field">
+                    <label>Hundreds</label>
+                    <input type = "text" placeholder = "Hundreds" name="player[hundreds]" required value="<%= player.hundreds%>">
+                </div>
+                <div class="field">
+                    <label>Fiftys</label>
+                    <input type = "text" placeholder = "Fiftys" name="player[fiftys]" required value="<%= player.fiftys%>">
+                </div>
+                <div class="field">
+                    <label>Fours</label>
+                    <input type = "text" placeholder = "Fours" name="player[fours]" required value="<%= player.fours%>">
+                </div>
+                <div class="field">
+                    <label>Sixs</label>
+                    <input type = "text" placeholder = "Sixs" name="player[sixs]" required value="<%= player.sixs%>">
+                </div>
+                <div class="field">
+                    <label>Team</label>
+                    <input type = "text" placeholder = "Team" name="player[team]" required value="<%= player.team%>">
+                </div>
+                
+                
+                <div class="field">
+                    <button type="submit">Submit</button>
+                </div>
+            
+            </form>
+<% include partials/footer %>
