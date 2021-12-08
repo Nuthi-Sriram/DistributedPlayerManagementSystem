@@ -98,6 +98,17 @@ app.post("/loginsc", passport.authenticate("local", {
     failureRedirect: "/loginsc"
 }), function (req, res) {
 });
+ 
+// Login routes for enthusiasts committe
+app.get("/loginen", function (req, res) {
+    res.render("loginen");
+});
+
+app.post("/loginen", passport.authenticate("local", {
+    successRedirect: "/dashboarden",
+    failureRedirect: "/loginen"
+}), function (req, res) {
+});
 
 
 //-------------- logout routes ----------------//
@@ -120,6 +131,12 @@ app.get("/dashboard", isLoggedIn, function (req, res) {
 
 app.get("/dashboardsc", isLoggedIn, function (req, res) {
     res.render("dashboardsc");
+});
+
+//----------------dashboard enthusiast route---------------//
+
+app.get("/dashboarden", isLoggedIn, function (req, res) {
+    res.render("dashboarden");
 });
  
 
@@ -416,8 +433,68 @@ app.get("/dashboardsc/mymatches/:id/:playerid", isLoggedIn, function (req, res) 
 });
 
 
+//-------------enthusiasts route----------//
 
-//----------------end of selection committee match routes---------------//
+app.get("/dashboarden/mymatches", isLoggedIn, function (req, res) {
+    Match.find({ user: req.user.id }, function (err, team) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("matchen", { team: team });
+        }
+    })
+});
+
+//------------------ Player route---------------//
+
+app.get("/dashboarden/mymatches/:id", function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            // console.log("test");
+            PlayerStats.find({ user: req.user.id, match: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);  
+                }
+                else {  
+                    // console.log("inside playerstats");
+                    // console.log(player);
+                    // console.log(match); 
+                    res.render("playerstatsen", { player: player, match: match });
+                }
+            });
+        } 
+    });
+});
+
+
+// -----------------Show Route-------------//
+
+app.get("/dashboarden/mymatches/:id/:playerid", isLoggedIn, function (req, res) {
+    var _id = req.params.id;
+    Match.findById({ user: req.user.id, _id }, function (err, match) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            var _id = req.params.playerid;
+            PlayerStats.findById({ _id, match: req.params.id }, function (err, player) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.render("showstatsen", { player: player, match: match });
+                }
+            });
+        }
+    });
+});
+//------ end of enthusiasts routes--------------------//
+
 
 //--------------------------Match Routes ------------------//
 
@@ -803,6 +880,17 @@ app.get("/dashboardsc/schedule",isLoggedIn, function (req, res) {
         }
         else {
             res.render("schedulesc", { schedule: schedule });
+        }
+    });
+});
+
+app.get("/dashboarden/schedule",isLoggedIn, function (req, res) {
+    Schedule.find({ user: req.user.id }, function (err, schedule) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("scheduleen", { schedule: schedule });
         }
     });
 });
