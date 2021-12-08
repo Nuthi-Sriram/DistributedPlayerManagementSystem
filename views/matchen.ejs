@@ -1,0 +1,27 @@
+<% include partials/headeren %>
+<%include partials/sidebaren %>
+        <div class="twelve wide column" style="margin-top:30px"> 
+                 <h2 style="margin-top:30px;margin-bottom:10px;color:#490707"><i class="user icon" style="color:#ac1010"></i>Matches:- </h2>
+                 <!-- <a href="/dashboard/newmatch"><button class="ui red basic button">Add New Match</button></a> -->
+ 
+            <hr style="margin-right:300px"> 
+            <div class="team" style="margin-top:50px;margin-right:300px">
+                 <div class="ui middle aligned divided list">
+                    <% team.forEach(function(team){ %>
+                    <div class="item">
+                      <div class="right floated content">
+                        <a href="/dashboarden/mymatches/<%= team._id %>"><button class="ui green button">Check Player Stats For The Match</button></a>
+                      </div>
+                      <img class="ui avatar image" src="<%= team.image %>">
+                      <div class="content">
+                        <div class="header">
+                          <h3><%= team.name %></h3>
+                          </div>
+                      </div>
+                    </div>
+                    <% }) %>
+                </div>
+                </div>
+            </div>
+        </div>
+<% include partials/footer %>
