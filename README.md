@@ -1,23 +1,23 @@
-# DistributedPlayerManagmentSystem
+# DistributedPlayerManagementSystem
 
 Through this project we intend to digitize and simplify the ways in which cricket players’ statistics are analyzed and maintained. The major objective of this application is to minimize the cumbersome process that usually takes place while analyzing and maintaining the stats. This reduces the hard manual paperwork and makes the process trouble free.
-The project will contain a vast database with a few tables. One table holds the information about the players (Name, player id, region), the second table holds the statistics of the player (matches, innings, runs, highest score, average, 50’s, 100’s, wickets, economy, strike rate), the third table holds the information about players’ personal details (date of birth, age, birth place).
+The project contains a vast database with a few Collections. One Collection holds the information about the players (Name, player id, region), the second table holds the statistics of the player (matches, innings, runs, highest score, average, 50’s, 100’s, wickets, economy, strike rate), the third table holds the information about players’ personal details (date of birth, age, birth place).
 
 ---
 ## System Features
 - ### Stats man dashboard:
-        $ Take notes in the app in form of mini microblogging
-        $ Continuously keep track of the cricket player & match statistics
-        $ Make schedule of the matches
+        - Take notes in the app in form of mini microblogging
+        - Continuously keep track of the cricket player & match statistics
+        - Make schedule of the matches
 
 - ### Selection Committe dashboard
-        $ Access to players personal information (mobile number, email, etc.)
-        $ View access to cricket player & match stats
-        $ View access of the cricket schedule
+        - Access to players personal information (mobile number, email, etc.)
+        - View access to cricket player & match stats
+        - View access of the cricket schedule
 
 - ### Enthusiast dashboard
-        $ View access to cricket player & match stats
-        $ View access of the cricket schedule
+        - View access to cricket player & match stats
+        - View access of the cricket schedule
 
 ---
 ## Requirements
