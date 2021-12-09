@@ -13,6 +13,7 @@ var Team = require("./models/team");
 var Match=require("./models/match");
 var PlayerStats=require("./models/playermatchstats");
 var Schedule = require("./models/schedule");
+var alert = require('alert');
 
 mongoose.connect("mongodb+srv://sriram:sriram@cluster0.zbiur.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 app.set("view engine", "ejs");
@@ -80,11 +81,14 @@ app.get("/login", function (req, res) {
     res.render("login");
 });
 
+app.get("/relogin", function (req, res) {
+    res.render("login");
+    alert("Please enter a valid username and password");
+});
 
-
-app.post("/login", passport.authenticate("local", {
+ app.post("/login", passport.authenticate("local", {
     successRedirect: "/dashboard",
-    failureRedirect: "/login"
+    failureRedirect: "/relogin"
 }), function (req, res) {
 });
 
@@ -93,9 +97,14 @@ app.get("/loginsc", function (req, res) {
     res.render("loginsc");
 });
 
+app.get("/reloginsc", function (req, res) {
+    res.render("loginsc");
+    alert("Please enter a valid username and password");
+});
+
 app.post("/loginsc", passport.authenticate("local", {
     successRedirect: "/dashboardsc",
-    failureRedirect: "/loginsc"
+    failureRedirect: "/reloginsc"
 }), function (req, res) {
 });
  
@@ -104,9 +113,14 @@ app.get("/loginen", function (req, res) {
     res.render("loginen");
 });
 
+app.get("/reloginen", function (req, res) {
+    res.render("loginen");
+    alert("Please enter a valid username and password");
+})
+
 app.post("/loginen", passport.authenticate("local", {
     successRedirect: "/dashboarden",
-    failureRedirect: "/loginen"
+    failureRedirect: "/reloginen"
 }), function (req, res) {
 });
 
