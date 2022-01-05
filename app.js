@@ -14,14 +14,16 @@ var Match=require("./models/match");
 var PlayerStats=require("./models/playermatchstats");
 var Schedule = require("./models/schedule");
 var alert = require('alert');
+require('dotenv').config();
 
-mongoose.connect("mongodb+srv://sriram:sriram@cluster0.zbiur.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-app.set("view engine", "ejs");
+ 
+mongoose.connect(process.env.DB_PATH, { useNewUrlParser: true });
+app.set("view engine", "ejs"); 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(flash());
-
+ 
 app.use(require("express-session")({
     secret: "My name is Anshul",
     resave: false,
